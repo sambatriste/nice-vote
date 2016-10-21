@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DataSourceを使用したコネクションファクトリの設定 -->
+<component-configuration
+        xmlns="http://tis.co.jp/nablarch/component-configuration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration /component-configuration.xsd">
+
+  <!-- ステートメントファクトリ -->
+  <import file="com/nablarch/example/db/db-statement-factory.xml"/>
+
+  <import file="nablarch/core/db/db-access-exception-factory.xml"/>
+
+  <!-- データベース接続用設定 -->
+  <component name="connectionFactory"
+             class="nablarch.core.db.connection.BasicDbConnectionFactoryForDataSource">
+    <property name="dialect" ref="dialect" />
+    <property name="dataSource" ref="dataSource" />
+    <property name="statementFactory" ref="statementFactory" />
+    <property name="statementReuse" value="${nablarch.connectionFactory.statementReuse}" />
+    <property name="dbAccessExceptionFactory" ref="dbAccessExceptionFactory" />
+  </component>
+
+</component-configuration>

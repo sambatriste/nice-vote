@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- SQL実行用オブジェクト生成コンポーネントの設定 -->
+<component-configuration
+        xmlns="http://tis.co.jp/nablarch/component-configuration"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration /component-configuration.xsd">
+
+  <!-- ステートメントの設定 -->
+  <component name="statementFactory"
+             class="nablarch.core.db.statement.BasicStatementFactory">
+    <property name="fetchSize" value="${nablarch.statementFactory.fetchSize}"/>
+    <property name="queryTimeout" value="${nablarch.statementFactory.queryTimeout}"/>
+    <property name="sqlParameterParserFactory">
+      <component class="nablarch.core.db.statement.BasicSqlParameterParserFactory"/>
+    </property>
+    <property name="sqlStatementExceptionFactory" ref="statementExceptionFactory"/>
+    <property name="sqlLoader" ref="sqlLoader"/>
+    <property name="updatePreHookObjectHandlerList">
+      <list />
+    </property>
+  </component>
+
+  <!-- SQL文実行時例外用の設定 -->
+  <component name="statementExceptionFactory"
+             class="nablarch.core.db.statement.exception.BasicSqlStatementExceptionFactory">
+  </component>
+
+  <!-- SQLLoaderの設定 -->
+  <component name="sqlLoader" class="nablarch.core.db.statement.BasicSqlLoader">
+    <property name="fileEncoding" value="${nablarch.sqlLoader.fileEncoding}"/>
+    <property name="extension" value="sql"/>
+  </component>
+
+</component-configuration>

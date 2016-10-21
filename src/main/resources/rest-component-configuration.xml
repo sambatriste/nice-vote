@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component-configuration
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://tis.co.jp/nablarch/component-configuration"
+    xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration  /component-configuration.xsd">
+
+  <!-- テーブル定義 -->
+  <import file="nablarch/schema-config.xml" />
+
+  <!-- 精査に使用する文字集合定義 -->
+  <import file="charset-definition.xml" />
+
+  <!-- DomainManager 実装クラス設定 -->
+  <component name="domainManager" class="com.nablarch.example.domain.RestExampleDomainManager"/>
+
+  <!-- BeanValidation実装クラス -->
+  <component name="validationStrategy" class="nablarch.common.web.validator.BeanValidationStrategy" />
+
+  <!-- 環境設定ファイル -->
+  <config-file file="common.config" />
+  <config-file file="env.config" />
+
+  <!-- データベース設定 -->
+  <import file="nablarch/webui/db-for-webui.xml"/>
+
+  <!--パッケージマッピングの設定 -->
+  <component name="packageMapping" class="nablarch.integration.router.RoutesMapping">
+    <property name="basePackage" value="${nablarch.commonProperty.basePackage}" />
+    <property name="methodBinderFactory">
+      <component class="nablarch.fw.jaxrs.JaxRsMethodBinderFactory">
+        <property name="handlerList">
+          <component class="nablarch.integration.jaxrs.jersey.JerseyJaxRsHandlerListFactory"/>
+        </property>
+      </component>
+    </property>
+  </component>
+
+  <!-- ダイアレクト設定 -->
+  <component name="dialect" class="nablarch.core.db.dialect.H2Dialect" />
+
+  <!-- ハンドラキュー構成 -->
+  <component name="webFrontController" class="nablarch.fw.web.servlet.WebFrontController">
+    <property name="handlerQueue">
+      <list>
+        <component class="nablarch.fw.handler.GlobalErrorHandler"/>
+        <component class="nablarch.fw.jaxrs.JaxRsResponseHandler">
+          <property name="errorResponseBuilder">
+            <component class="com.nablarch.example.error.ExampleErrorResponseBuilder" />
+          </property>
+          <property name="errorLogWriter">
+            <component class="com.nablarch.example.error.ExampleErrorLogWriter" />
+          </property>
+        </component>
+        <component-ref name="dbConnectionManagementHandler"/>
+        <component-ref name="transactionManagementHandler"/>
+        <component-ref name="packageMapping"/>
+      </list>
+    </property>
+  </component>
+
+  <!-- 初期化が必要なコンポーネント -->
+  <component name="initializer" class="nablarch.core.repository.initialization.BasicApplicationInitializer">
+    <property name="initializeList">
+      <list>
+        <component-ref name="packageMapping" />
+      </list>
+    </property>
+  </component>
+
+</component-configuration>

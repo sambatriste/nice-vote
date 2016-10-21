@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-configuration
+    xmlns="http://tis.co.jp/nablarch/component-configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://tis.co.jp/nablarch/component-configuration /component-configuration.xsd">
+
+  <!-- デフォルトコンフィグレーションの設定を読み込む-->
+  <import file="nablarch/core/validation/charset-definition.xml" />
+
+  <component name="英大文字" class="nablarch.core.validation.validator.unicode.RangedCharsetDef">
+    <property name="startCodePoint" value="U+0041"/>
+    <property name="endCodePoint" value="U+005A"/>
+  </component>
+
+  <component name="数字" class="nablarch.core.validation.validator.unicode.RangedCharsetDef">
+    <property name="startCodePoint" value="U+0030"/>
+    <property name="endCodePoint" value="U+0039"/>
+  </component>
+</component-configuration>
