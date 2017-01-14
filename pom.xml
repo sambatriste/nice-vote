@@ -22,7 +22,8 @@
 
     <!-- gsp-dba-maven-pluginが使用するデータベース設定 -->
     <nablarch.db.jdbcDriver>org.h2.Driver</nablarch.db.jdbcDriver>
-    <nablarch.db.url>jdbc:h2:./h2/db/rest_example</nablarch.db.url>
+    <!--<nablarch.db.url>jdbc:h2:./h2/db/rest_example</nablarch.db.url>-->
+    <nablarch.db.url>jdbc:h2:./h2/db/nicevote</nablarch.db.url>
     <nablarch.db.adminUser>REST_EXAMPLE</nablarch.db.adminUser>
     <nablarch.db.adminPassword>REST_EXAMPLE</nablarch.db.adminPassword>
     <nablarch.db.user>REST_EXAMPLE</nablarch.db.user>
@@ -31,6 +32,9 @@
 
     <dba.entity.rootPackage>com.nablarch.example</dba.entity.rootPackage>
     <dba.entity.entityPackage>entity</dba.entity.entityPackage>
+
+    <dba.erdFile>src/main/resources/entity/nicevote.edm</dba.erdFile>
+
   </properties>
 
   <!--
@@ -392,6 +396,11 @@
             <exclude>**/com/nablarch/example/app/entity/*</exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.4.0</version>
       </plugin>
     </plugins>
   </build>
