@@ -2,9 +2,10 @@ package com.nablarch.example.action;
 
 import com.nablarch.example.dto.Opinions;
 import com.nablarch.example.entity.Theme;
-import com.nablarch.example.form.ProjectSearchForm;
 import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
+import nablarch.core.validation.ee.Domain;
+import nablarch.core.validation.ee.Required;
 import nablarch.core.validation.ee.ValidatorUtil;
 import nablarch.fw.web.HttpRequest;
 
@@ -41,13 +42,15 @@ public class ThemeAction {
     }
 
     public static class ThemeSearchForm implements Serializable {
-        private int themeId;
+        @Domain("id")
+        @Required
+        private String themeId;
 
-        public int getThemeId() {
+        public String getThemeId() {
             return themeId;
         }
 
-        public void setThemeId(int themeId) {
+        public void setThemeId(String themeId) {
             this.themeId = themeId;
         }
     }
