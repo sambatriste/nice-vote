@@ -1,5 +1,6 @@
 <routes>
-  <get    path="projects" to="Project#find" />
-  <post   path="projects" to="Project#save" />
-  <put    path="projects" to="Project#update" />
+  <get path="themes" to="Theme#findAll"/>
+  <get path="theme" to="Theme#find"/>
+
+
 </routes>
