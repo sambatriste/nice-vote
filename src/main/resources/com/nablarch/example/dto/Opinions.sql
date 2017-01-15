@@ -1,0 +1,16 @@
+FIND_OPINIONS=
+select
+    OP.OPINION_ID,
+    OP.DESCRIPTION,
+    count(AG.AGREEMENT_ID) AGREEMENT_COUNT
+from
+    OPINION OP
+left join
+    AGREEMENT AG
+        on AG.OPINION_ID = OP.OPINION_ID
+where OP.THEME_ID = :themeId
+group by
+    OP.OPINION_ID,
+    OP.DESCRIPTION
+order by
+   OP.OPINION_ID

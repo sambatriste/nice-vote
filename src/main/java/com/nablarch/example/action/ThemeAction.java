@@ -1,5 +1,6 @@
 package com.nablarch.example.action;
 
+import com.nablarch.example.dto.Opinions;
 import com.nablarch.example.entity.Theme;
 import com.nablarch.example.form.ProjectSearchForm;
 import nablarch.common.dao.UniversalDao;
@@ -28,13 +29,15 @@ public class ThemeAction {
     }
 
     @Produces(MediaType.APPLICATION_JSON)
-    public Theme find(HttpRequest req) {
+    public List<Opinions> find(HttpRequest req) {
         ThemeSearchForm form = BeanUtil.createAndCopy(ThemeSearchForm.class, req.getParamMap());
 
         // BeanValidation実行
         ValidatorUtil.validate(form);
 
-        return UniversalDao.findById(Theme.class, form.getThemeId());
+        return UniversalDao.findAllBySqlFile(Opinions.class,
+                                             "FIND_OPINIONS",
+                                             form);
     }
 
     public static class ThemeSearchForm implements Serializable {

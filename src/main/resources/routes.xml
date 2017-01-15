@@ -1,6 +1,4 @@
 <routes>
-  <get path="themes" to="Theme#findAll"/>
-  <get path="theme" to="Theme#find"/>
-
-
+  <get path="theme" to="Theme#findAll"/>
+  <get path="theme/:themeId" to="Theme#find"/>
 </routes>
