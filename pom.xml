@@ -276,6 +276,24 @@
       <version>3.0.1</version>
       <scope>test</scope>
     </dependency>
+
+    <!--<dependency>-->
+      <!--<groupId>org.dbunit</groupId>-->
+      <!--<artifactId>dbunit</artifactId>-->
+      <!--<version>2.5.3</version>-->
+    <!--</dependency>-->
+    <dependency>
+      <groupId>de.ppi.dbunit.datasetbuilder</groupId>
+      <artifactId>dbunit-datasetbuilder</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.21</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

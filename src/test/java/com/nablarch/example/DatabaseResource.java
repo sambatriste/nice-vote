@@ -5,6 +5,7 @@ import nablarch.core.db.transaction.SimpleDbTransactionManager;
 import nablarch.core.repository.SystemRepository;
 import org.junit.rules.ExternalResource;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,6 +48,12 @@ public class DatabaseResource extends ExternalResource {
 
     private ConnectionFactory getConnectionFactory() {
         return SystemRepository.get("connectionFactory");
+    }
+
+    public DataSource getDataSource() {
+        DataSource dataSource = SystemRepository.get("dataSource");
+        assert dataSource != null;
+        return dataSource;
     }
 
     public Connection getConnection() {
