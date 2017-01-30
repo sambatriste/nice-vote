@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by kawasaki on 2017/01/15.
+ * @noinspection unpublishedApi
  */
 public class DatabaseResource extends ExternalResource {
 
