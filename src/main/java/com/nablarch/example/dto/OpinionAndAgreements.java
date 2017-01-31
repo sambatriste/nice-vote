@@ -3,7 +3,7 @@ package com.nablarch.example.dto;
 /**
  * Created by kawasaki on 2017/01/15.
  */
-public class Opinions {
+public class OpinionAndAgreements {
     private Integer themeId;
     private String title;
     private Integer opinionId;

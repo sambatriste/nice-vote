@@ -276,12 +276,6 @@
       <version>3.0.1</version>
       <scope>test</scope>
     </dependency>
-
-    <!--<dependency>-->
-      <!--<groupId>org.dbunit</groupId>-->
-      <!--<artifactId>dbunit</artifactId>-->
-      <!--<version>2.5.3</version>-->
-    <!--</dependency>-->
     <dependency>
       <groupId>de.ppi.dbunit.datasetbuilder</groupId>
       <artifactId>dbunit-datasetbuilder</artifactId>
@@ -378,7 +372,7 @@
         </configuration>
       </plugin>
       <!-- findBugs -->
-      <plugin>
+<!--      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
         <executions>
@@ -397,12 +391,12 @@
             <plugin>
               <groupId>com.nablarch.framework</groupId>
               <artifactId>nablarch-testing</artifactId>
-              <!-- プラグインに内包するモジュールはバージョン指定必須 -->
+              &lt;!&ndash; プラグインに内包するモジュールはバージョン指定必須 &ndash;&gt;
               <version>1.0.7</version>
             </plugin>
           </plugins>
         </configuration>
-      </plugin>
+      </plugin>-->
       <!-- カバレッジ取得 -->
       <plugin>
         <groupId>org.jacoco</groupId>

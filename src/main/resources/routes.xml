@@ -1,4 +1,21 @@
 <routes>
+  <!--
+   全てのテーマを取得する。
+  -->
   <get path="theme" to="Theme#findAll"/>
+
+  <!--
+   指定したテーマの投票状況を取得する。
+  -->
   <get path="theme/:themeId" to="Theme#find"/>
+
+  <!--
+  新規テーマを登録する。
+  -->
+  <post path="theme" to="Theme#save"/>
+
+  <!--
+  意見に賛同する。
+  -->
+  <post path="agreement/:opinionId"/>
 </routes>

@@ -20,6 +20,17 @@ public class RestExampleDomain {
     @Digits(integer = 9)
     private String id;
 
+    /** テーマタイトル */
+    @Length(max = 64)
+    @SystemChar(charsetDef = "システム許容文字")
+    private String themeTitle;
+
+    /** 意見 */
+    @Length(max = 256)
+    @SystemChar(charsetDef = "システム許容文字")
+    private String opinionDescription;
+
+
     /** プロジェクト名 */
     @Length(max = 64)
     @SystemChar(charsetDef = "全角文字", allowLineSeparator = false)
