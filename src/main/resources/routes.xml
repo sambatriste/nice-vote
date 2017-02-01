@@ -15,6 +15,10 @@
   <post path="theme" to="Theme#save"/>
 
   <!--
+  テーマに意見を投稿する。
+  -->
+  <post path="opinion" to="Opinion#save"/>
+  <!--
   意見に賛同する。
   -->
   <post path="agreement/:opinionId"/>

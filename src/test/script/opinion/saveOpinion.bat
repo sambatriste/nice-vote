@@ -1,0 +1,1 @@
+curl -v -X post -H "Content-type: application/json" -d @saveOpinion.json http://localhost:9080/opinion
