@@ -34,7 +34,7 @@
     <dba.entity.entityPackage>entity</dba.entity.entityPackage>
 
     <dba.erdFile>src/main/resources/entity/nicevote.edm</dba.erdFile>
-
+    <dba.gsp-target-dir>${project.build.directory}</dba.gsp-target-dir>
   </properties>
 
   <!--
@@ -91,7 +91,6 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <build>
-        <directory>${dba.gsp-target-dir}</directory>
         <plugins>
           <plugin>
             <groupId>jp.co.tis.gsp</groupId>
