@@ -296,9 +296,10 @@
         <configuration>
           <port>9080</port>
           <servers>
+            <!-- JettyはWindowsでファイルをロックする問題があるためTomcatを使用する。 -->
             <server>
               <groupId>net.unit8.waitt.server</groupId>
-              <artifactId>waitt-jetty9</artifactId>
+              <artifactId>waitt-tomcat8</artifactId>
               <version>0.1.0</version>
             </server>
           </servers>
