@@ -1,7 +1,0 @@
-<FindBugsFilter>
-
-    <!-- 使用不許可APIチェック -->
-    <Match>
-        <Bug pattern="UPU_UNPUBLISHED_API_USAGE"/>
-    </Match>
-</FindBugsFilter>

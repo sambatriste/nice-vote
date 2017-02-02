@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
-
-<!-- 自動生成されるentityクラスをチェックから外す設定 -->
-<!-- ここから -->
-<suppressions>
-<suppress checks=".*" files="/com/nablarch/example/entity/.*" />
-</suppressions>
-<!-- ここまで -->
