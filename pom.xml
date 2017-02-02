@@ -14,8 +14,6 @@
   <packaging>war</packaging>
 
   <properties>
-    <!-- override nablarch-archetype-parent -->
-    <java.version>1.8</java.version>
 
     <!-- 環境ごとのリソースディレクトリ(プロファイルにより切り替わる) -->
     <env.resources>${project.basedir}/src/env/${env.dir}/resources</env.resources>
@@ -175,7 +173,6 @@
     </dependencies>
   </dependencyManagement>
 
-
   <dependencies>
     <dependency>
       <groupId>com.nablarch.configuration</groupId>
@@ -268,13 +265,6 @@
       <version>4.12</version>
     </dependency>
 
-    <!-- verifyフェーズでAnt経由でfindbugsを実行する際に使用する -->
-    <dependency>
-      <groupId>com.google.code.findbugs</groupId>
-      <artifactId>findbugs</artifactId>
-      <version>3.0.1</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>de.ppi.dbunit.datasetbuilder</groupId>
       <artifactId>dbunit-datasetbuilder</artifactId>
@@ -297,22 +287,8 @@
       <resource>
         <directory>src/main/resources</directory>
       </resource>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.sql</include>
-        </includes>
-      </resource>
     </resources>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <!-- MANIFEST.MFでClass-Pathを指定すると、依存jar内で定義されているtaglibのuriを正しく解決してくれない。 -->
-          <useManifestOnlyJar>false</useManifestOnlyJar>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>net.unit8.waitt</groupId>
         <artifactId>waitt-maven-plugin</artifactId>
@@ -347,67 +323,6 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
       </plugin>
-      <!-- ant経由で各種ツールを起動する。実行対象のツールは、
-      Findbugs、使用許可API一覧作成ツールである -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <!-- JSP静的解析ツールは必要ないため、実行しないように設定を上書きする。 -->
-            <id>verify-jsp</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Check Style実行 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <excludes>
-            **/com/nablarch/example/app/entity/*.java
-          </excludes>
-        </configuration>
-      </plugin>
-      <!-- findBugs -->
-<!--      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>verify</phase>
-            <goals>
-              <goal>findbugs</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <xmlOutput>true</xmlOutput>
-          <excludeFilterFile>${findbugs.config.filter.production}</excludeFilterFile>
-          <jvmArgs>-Dnablarch-findbugs-config=${findbugs.config.published.production}</jvmArgs>
-          <plugins>
-            <plugin>
-              <groupId>com.nablarch.framework</groupId>
-              <artifactId>nablarch-testing</artifactId>
-              &lt;!&ndash; プラグインに内包するモジュールはバージョン指定必須 &ndash;&gt;
-              <version>1.0.7</version>
-            </plugin>
-          </plugins>
-        </configuration>
-      </plugin>-->
-      <!-- カバレッジ取得 -->
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <!-- 0.7.3以降のJaCoCoではリクエスト単体テストのカバレッジを計測できない。
-          Jenkinsとの連携にはJaCoCoプラグインの1系を使用する(2系はJaCoCo0.7.4以降が必須) -->
-        <configuration>
-          <excludes>
-            <exclude>**/com/nablarch/example/app/entity/*</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
 
       <!-- H2 Consoleを起動 -->
       <plugin>
@@ -425,16 +340,6 @@
             <argument>-password</argument>
             <argument>REST_EXAMPLE</argument>
           </arguments>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.2</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
         </configuration>
       </plugin>
     </plugins>

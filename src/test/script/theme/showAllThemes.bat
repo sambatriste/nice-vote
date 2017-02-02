@@ -1,0 +1,1 @@
+curl -v -X get http://localhost:9080/api/theme

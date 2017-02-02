@@ -2,24 +2,24 @@
   <!--
    全てのテーマを取得する。
   -->
-  <get path="theme" to="Theme#findAll"/>
+  <get path="api/theme" to="Theme#findAll"/>
 
   <!--
    指定したテーマの投票状況を取得する。
   -->
-  <get path="theme/:themeId" to="Theme#find"/>
+  <get path="api/theme/:themeId" to="Theme#find"/>
 
   <!--
   新規テーマを登録する。
   -->
-  <post path="theme" to="Theme#save"/>
+  <post path="api/theme" to="Theme#save"/>
 
   <!--
   テーマに意見を投稿する。
   -->
-  <post path="opinion" to="Opinion#save"/>
+  <post path="api/opinion" to="Opinion#save"/>
   <!--
   意見に賛同する。
   -->
-  <post path="agreement/:opinionId"/>
+  <post path="api/agreement/:opinionId"/>
 </routes>
