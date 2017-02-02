@@ -408,10 +408,24 @@
           </excludes>
         </configuration>
       </plugin>
+
+      <!-- H2 Consoleを起動 -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.4.0</version>
+        <configuration>
+          <mainClass>org.h2.tools.Console</mainClass>
+          <arguments>
+            <argument>-web</argument>
+            <argument>-url</argument>
+            <argument>jdbc:h2:./h2/db/nicevote</argument>
+            <argument>-user</argument>
+            <argument>REST_EXAMPLE</argument>
+            <argument>-password</argument>
+            <argument>REST_EXAMPLE</argument>
+          </arguments>
+        </configuration>
       </plugin>
 
       <plugin>
