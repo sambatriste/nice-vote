@@ -20,7 +20,6 @@
 
     <!-- gsp-dba-maven-pluginが使用するデータベース設定 -->
     <nablarch.db.jdbcDriver>org.h2.Driver</nablarch.db.jdbcDriver>
-    <!--<nablarch.db.url>jdbc:h2:./h2/db/rest_example</nablarch.db.url>-->
     <nablarch.db.url>jdbc:h2:./h2/db/nicevote</nablarch.db.url>
     <nablarch.db.adminUser>REST_EXAMPLE</nablarch.db.adminUser>
     <nablarch.db.adminPassword>REST_EXAMPLE</nablarch.db.adminPassword>
@@ -56,6 +55,7 @@
         <dependency>
           <groupId>com.nablarch.framework</groupId>
           <artifactId>nablarch-fw-web-hotdeploy</artifactId>
+          <scope>runtime</scope>
         </dependency>
         <!-- TODO: プロジェクトで使用するDB製品にあわせたJDBCドライバに修正してください。 -->
         <dependency>
@@ -181,12 +181,6 @@
 
     <dependency>
       <groupId>com.nablarch.framework</groupId>
-      <artifactId>nablarch-testing</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.nablarch.framework</groupId>
       <artifactId>nablarch-fw-jaxrs</artifactId>
     </dependency>
 
@@ -263,6 +257,7 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.12</version>
+      <scope>test</scope>
     </dependency>
 
     <dependency>
