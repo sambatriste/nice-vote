@@ -1,1 +1,1 @@
-curl -v -X get http://localhost:9080/api/theme
+curl -v -X GET http://localhost:9080/api/theme
