@@ -8,6 +8,9 @@ import nablarch.core.validation.ee.Domain;
 import nablarch.core.validation.ee.Required;
 import nablarch.fw.web.HttpResponse;
 
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 
 /**
@@ -21,7 +24,8 @@ public class AgreementAction {
      * @param form フォーム
      * @return レスポンス
      */
-
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Valid
     public HttpResponse agree(AgreementForm form) {
         Agreement agreement = BeanUtil.createAndCopy(Agreement.class, form);
         UniversalDao.insert(agreement);
@@ -33,12 +37,15 @@ public class AgreementAction {
         /** ID */
         @Required
         @Domain("id")
-        public String opinionId;
+        private String opinionId;
 
-        /** ID */
-        @Required
-        @Domain("id")
-        public String agreementId;
+        public String getOpinionId() {
+            return opinionId;
+        }
+
+        public void setOpinionId(String opinionId) {
+            this.opinionId = opinionId;
+        }
 
     }
 }
