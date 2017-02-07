@@ -48,9 +48,7 @@
 
   <component name="jaxRsResponseHandler" class="nablarch.fw.jaxrs.JaxRsResponseHandler">
     <property name="errorResponseBuilder" >
-      <component class="com.nablarch.example.error.ExampleErrorResponseBuilder">
-        <property name="bodyConverters" ref="bodyConverters"/>
-      </component>
+      <component class="com.nablarch.example.error.ExampleErrorResponseBuilder"/>
     </property>
     <property name="errorLogWriter">
       <component class="com.nablarch.example.error.ExampleErrorLogWriter" />

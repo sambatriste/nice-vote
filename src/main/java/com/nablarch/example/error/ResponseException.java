@@ -1,4 +1,4 @@
-package com.nablarch.example;
+package com.nablarch.example.error;
 
 /**
  * Created by tie301686 on 2017/02/06.

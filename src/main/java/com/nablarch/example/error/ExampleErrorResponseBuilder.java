@@ -1,22 +1,15 @@
 package com.nablarch.example.error;
 
-import com.nablarch.example.ResponseException;
+import com.nablarch.example.ResponseBuilder;
 import nablarch.common.dao.NoDataException;
 import nablarch.core.message.ApplicationException;
 import nablarch.core.message.Message;
-import nablarch.core.util.StringUtil;
 import nablarch.fw.ExecutionContext;
-import nablarch.fw.jaxrs.BodyConverter;
 import nablarch.fw.jaxrs.ErrorResponseBuilder;
-import nablarch.fw.jaxrs.JaxRsContext;
-import nablarch.fw.web.HttpErrorResponse;
 import nablarch.fw.web.HttpRequest;
 import nablarch.fw.web.HttpResponse;
-import nablarch.fw.web.HttpResponse.Status;
 
 import javax.persistence.OptimisticLockException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +22,6 @@ import java.util.stream.Collectors;
  * @noinspection unpublishedApi
  */
 public class ExampleErrorResponseBuilder extends ErrorResponseBuilder {
-
-    /** {@link BodyConverter} */
-    private List<BodyConverter> bodyConverters = new ArrayList<>();
 
     /**
      * エラーレスポンスを生成する。
@@ -70,15 +60,17 @@ public class ExampleErrorResponseBuilder extends ErrorResponseBuilder {
      * @return レスポンス
      */
     private HttpResponse createErrorResponse(ExecutionContext context, ApplicationException e) {
-        BodyConverter converter = findConverterToProduce(context);
+
         List<String> messages = e.getMessages()
-                                .stream()
-                                .map(Message::formatMessage)
-                                .collect(Collectors.toList());
+                                 .stream()
+                                 .map(Message::formatMessage)
+                                 .collect(Collectors.toList());
         Map<String, Object> map = new HashMap<>();
         map.put("messages", messages);
-        return converter.write(map, context)
-                        .setStatusCode(400);
+        return ResponseBuilder.with(context)
+                              .setStatusCode(400)
+                              .setResponseObject(map)
+                              .build();
     }
 
 
@@ -92,52 +84,11 @@ public class ExampleErrorResponseBuilder extends ErrorResponseBuilder {
      * @return レスポンス
      */
     private HttpResponse createErrorResponse(ExecutionContext context, ResponseException e) {
-        BodyConverter converter = findConverterToProduce(context);
-        Object responseObject = e.getResponseObject();
-        return converter.write(responseObject, context)
-                        .setStatusCode(e.getStatusCode());
+        return ResponseBuilder.with(context)
+                              .setStatusCode(e.getStatusCode())
+                              .setResponseObject(e.getResponseObject())
+                              .build();
     }
 
-    private BodyConverter findConverterToProduce(ExecutionContext context) {
-        String producesMediaType = getMediaTypeToProduce(context);
-        return findConverter(producesMediaType);
-    }
-
-    private String getMediaTypeToProduce(ExecutionContext context) {
-        JaxRsContext jaxRsContext = JaxRsContext.get(context);
-        String mediaType = jaxRsContext.getProducesMediaType();
-        if (StringUtil.isNullOrEmpty(mediaType)) {
-            throw new IllegalStateException("could not find media type to produce. [" + mediaType + "]");
-        }
-        return mediaType;
-    }
-
-    /**
-     * メディアタイプを変換するための{@link BodyConverter}を取得する。
-     *
-     * 変換対象の{@link BodyConverter}が存在しない場合は、{@link Status#UNSUPPORTED_MEDIA_TYPE}を持つ{@link HttpErrorResponse}を送出する。
-     *
-     * @param mediaType メディアタイプ
-     * @return {@link BodyConverter}
-     */
-    private BodyConverter findConverter(final String mediaType) {
-        for (BodyConverter converter : bodyConverters) {
-            if (converter.isConvertible(mediaType)) {
-                return converter;
-            }
-        }
-        throw new HttpErrorResponse(Status.UNSUPPORTED_MEDIA_TYPE.getStatusCode());
-    }
-
-    /**
-     * {@link BodyConverter}のリストを設定する。
-     *
-     * 既に設定されていた{@link BodyConverter}のリストは破棄される。
-     *
-     * @param bodyConverters {@link BodyConverter}
-     */
-    public void setBodyConverters(final List<BodyConverter> bodyConverters) {
-        this.bodyConverters = Collections.unmodifiableList(bodyConverters);
-    }
 
 }

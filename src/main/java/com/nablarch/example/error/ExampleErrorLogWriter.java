@@ -1,6 +1,5 @@
 package com.nablarch.example.error;
 
-import com.nablarch.example.ResponseException;
 import nablarch.common.dao.NoDataException;
 import nablarch.core.message.ApplicationException;
 import nablarch.fw.ExecutionContext;
