@@ -9,18 +9,10 @@
     <property name="handlerQueue">
       <list>
         <component class="nablarch.fw.handler.GlobalErrorHandler"/>
-        <component class="nablarch.fw.jaxrs.JaxRsResponseHandler">
-          <property name="errorResponseBuilder">
-            <component class="com.nablarch.example.error.ExampleErrorResponseBuilder" />
-          </property>
-          <property name="errorLogWriter">
-            <component class="com.nablarch.example.error.ExampleErrorLogWriter" />
-          </property>
-        </component>
+        <component-ref name="jaxRsResponseHandler"/>
         <component-ref name="dbConnectionManagementHandler"/>
         <component-ref name="transactionManagementHandler"/>
         <!-- ホットデプロイハンドラ -->
-        <!--　TODO:開発環境で本ハンドラを使用する場合、各PJでホットデプロイ対象となるパッケージを指定すること
         <component class="nablarch.fw.hotdeploy.HotDeployHandler">
           <property name="targetPackages">
             <list>
@@ -29,7 +21,6 @@
             </list>
           </property>
         </component>
-        -->
         <component-ref name="packageMapping"/>
       </list>
     </property>

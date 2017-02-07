@@ -23,15 +23,37 @@
   <!-- データベース設定 -->
   <import file="nablarch/webui/db-for-webui.xml"/>
 
-  <!--パッケージマッピングの設定 -->
+  <list name="bodyConverters">
+    <component class="nablarch.integration.jaxrs.jackson.Jackson2BodyConverter"/>
+    <component class="nablarch.fw.jaxrs.JaxbBodyConverter"/>
+    <component class="nablarch.fw.jaxrs.FormUrlEncodedConverter"/>
+  </list>
+
+  <!-- パッケージマッピングの設定 -->
   <component name="packageMapping" class="nablarch.integration.router.RoutesMapping">
     <property name="basePackage" value="${nablarch.commonProperty.basePackage}" />
     <property name="methodBinderFactory">
       <component class="nablarch.fw.jaxrs.JaxRsMethodBinderFactory">
         <property name="handlerList">
-          <component class="nablarch.integration.jaxrs.jersey.JerseyJaxRsHandlerListFactory"/>
+          <list>
+            <component class="nablarch.fw.jaxrs.BodyConvertHandler">
+              <property name="bodyConverters" ref="bodyConverters"/>
+            </component>
+            <component class="nablarch.fw.jaxrs.JaxRsBeanValidationHandler"/>
+          </list>
         </property>
       </component>
+    </property>
+  </component>
+
+  <component name="jaxRsResponseHandler" class="nablarch.fw.jaxrs.JaxRsResponseHandler">
+    <property name="errorResponseBuilder" >
+      <component class="com.nablarch.example.error.ExampleErrorResponseBuilder">
+        <property name="bodyConverters" ref="bodyConverters"/>
+      </component>
+    </property>
+    <property name="errorLogWriter">
+      <component class="com.nablarch.example.error.ExampleErrorLogWriter" />
     </property>
   </component>
 
@@ -43,14 +65,7 @@
     <property name="handlerQueue">
       <list>
         <component class="nablarch.fw.handler.GlobalErrorHandler"/>
-        <component class="nablarch.fw.jaxrs.JaxRsResponseHandler">
-          <property name="errorResponseBuilder">
-            <component class="com.nablarch.example.error.ExampleErrorResponseBuilder" />
-          </property>
-          <property name="errorLogWriter">
-            <component class="com.nablarch.example.error.ExampleErrorLogWriter" />
-          </property>
-        </component>
+        <component-ref name="jaxRsResponseHandler"/>
         <component-ref name="dbConnectionManagementHandler"/>
         <component-ref name="transactionManagementHandler"/>
         <component-ref name="packageMapping"/>
