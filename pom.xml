@@ -355,8 +355,8 @@
               <directory>${project.basedir}</directory>
               <includes>
                 <include>*.log</include>
-                <include>tomcat.8080</include>
-                <include>h2</include>
+                <include>tomcat.8080/</include>
+                <include>h2/</include>
               </includes>
             </fileset>
           </filesets>
