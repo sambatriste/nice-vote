@@ -36,13 +36,11 @@ public class ThemeAction {
     /**
      * 指定されたテーマについての意見を検索する。
      *
-     * @param req リクエスト
      * @return 意見
      */
     @Produces(MediaType.APPLICATION_JSON)
-    public List<OpinionAndAgreements> find(HttpRequest req) {
-        ThemeSearchForm form = BeanUtil.createAndCopy(ThemeSearchForm.class, req.getParamMap());
-        ValidatorUtil.validate(form);
+    @Valid
+    public List<OpinionAndAgreements> find(ThemeSearchForm form) {
         return UniversalDao.findAllBySqlFile(OpinionAndAgreements.class,
                                              "FIND_OPINIONS",
                                              form);
