@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>nice vote</title>
-    <script src='theme.tag' type='riot/tag'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.18/riot+compiler.js'></script>
 
 </head>
 <body>
-<h1>テーマ</h1>
+<h1>API呼び出しサンプル</h1>
+<p>GETメソッドのサンプルです。リンクを押すとJSONを取得できます。</p>
 
 <ul>
     <li><a href="/api/theme">テーマ一覧</a></li>
@@ -17,11 +16,35 @@
 </ul>
 
 <hr/>
+<h1>テーマ一覧を取得するサンプル</h1>
+<p><a href="/api/theme/1">/api/theme</a>にアクセスして、タイトルとリンクを表示します。</p>
 
 <theme></theme>
+
+<hr/>
+<h1>フロントエンドのイメージ</h1>
+
+<vote></vote>
+
+<script src='theme.tag' type='riot/tag'></script>
+<script src='vote.tag' type='riot/tag'></script>
+<script src="https://cdn.jsdelivr.net/riot/3.2/riot+compiler.min.js"></script>
+
+
 <script>
   // マウント
-  riot.mount('*');
+  riot.mount('theme');
+
+  riot.mount('vote', {
+    title: '次の飲み会',
+    items: [
+      { title: '中華', num: 0 },
+      { title: '焼肉', num: 1},
+      { title: 'チゲ鍋',  num: 2}
+    ]
+  });
+
+
 </script>
 
 </body>
