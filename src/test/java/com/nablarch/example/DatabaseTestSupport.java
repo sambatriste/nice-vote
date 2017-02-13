@@ -12,6 +12,7 @@ import org.dbunit.operation.DatabaseOperation;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -26,10 +27,10 @@ public class DatabaseTestSupport {
     public DatabaseResource databaseResource = new DatabaseResource();
 
     public void replace(IDataSet dataSet) throws Exception {
-        IDatabaseTester tester = new DataSourceDatabaseTester(databaseResource.getDataSource());
-        tester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
-        tester.setDataSet(dataSet);
-        tester.onSetup();
+        Connection jdbcConn = databaseResource.getConnection();
+        IDatabaseConnection connection = new DatabaseConnection(jdbcConn);
+        DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+        jdbcConn.commit();
     }
 
     public void assertEquals(ITable expected) throws DatabaseUnitException, SQLException {

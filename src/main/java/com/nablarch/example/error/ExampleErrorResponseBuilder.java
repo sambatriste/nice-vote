@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static nablarch.fw.web.HttpResponse.Status.BAD_REQUEST;
+
 /**
  * Example用のエラーレスポンス生成クラス。
  *
@@ -59,7 +61,7 @@ public class ExampleErrorResponseBuilder extends ErrorResponseBuilder {
      * @param e 例外
      * @return レスポンス
      */
-    private HttpResponse createErrorResponse(ExecutionContext context, ApplicationException e) {
+    HttpResponse createErrorResponse(ExecutionContext context, ApplicationException e) {
 
         List<String> messages = e.getMessages()
                                  .stream()
@@ -68,9 +70,8 @@ public class ExampleErrorResponseBuilder extends ErrorResponseBuilder {
         Map<String, Object> map = new HashMap<>();
         map.put("messages", messages);
         return ResponseBuilder.with(context)
-                              .setStatusCode(400)
-                              .setResponseObject(map)
-                              .build();
+                              .setHttpStatus(BAD_REQUEST)
+                              .build(map);
     }
 
 
@@ -83,11 +84,10 @@ public class ExampleErrorResponseBuilder extends ErrorResponseBuilder {
      * @param e 例外
      * @return レスポンス
      */
-    private HttpResponse createErrorResponse(ExecutionContext context, ResponseException e) {
+    HttpResponse createErrorResponse(ExecutionContext context, ResponseException e) {
         return ResponseBuilder.with(context)
-                              .setStatusCode(e.getStatusCode())
-                              .setResponseObject(e.getResponseObject())
-                              .build();
+                              .setHttpStatus(e.getStatus())
+                              .build(e.getResponseObject());
     }
 
 

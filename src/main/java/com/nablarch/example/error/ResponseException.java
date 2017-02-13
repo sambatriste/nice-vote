@@ -1,30 +1,56 @@
 package com.nablarch.example.error;
 
+import nablarch.fw.web.HttpResponse.Status;
+
+import static nablarch.fw.web.HttpResponse.Status.BAD_REQUEST;
+
 /**
- * Created by tie301686 on 2017/02/06.
+ * エラーレスポンスを返却するための例外クラス。
  */
 public class ResponseException extends RuntimeException {
 
+    /** レスポンス出力に使用するオブジェクト */
     private final Object responseObject;
 
-    private final int statusCode;
+    /** レスポンス出力に使用するHTTPステータス */
+    private final Status status;
 
+    /**
+     * コンストラクタ。
+     * HTTPステータスは400 BAD REQUEST が使用される。
+     *
+     * @param responseObject レスポンス出力に使用するオブジェクト
+     */
     public ResponseException(Object responseObject) {
-        this(responseObject, 400);
+        this(responseObject, BAD_REQUEST);
     }
 
-    public ResponseException(Object responseObject, int statusCode) {
+    /**
+     * コンストラクタ。
+     * @param responseObject レスポンス出力に使用するオブジェクト
+     * @param status レスポンス出力に使用するHTTPステータス
+     */
+    public ResponseException(Object responseObject, Status status) {
         this.responseObject = responseObject;
-        this.statusCode = statusCode;
+        this.status = status;
     }
 
+    /**
+     * レスポンスオブジェクトを取得する。
+     *
+     * @return レスポンスオブジェクト
+     */
     public Object getResponseObject() {
         return responseObject;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    /**
+     * HTTPステータスを取得する。
+     *
+     * @return HTTPステータス
+     */
+    public Status getStatus() {
+        return status;
     }
-
 
 }

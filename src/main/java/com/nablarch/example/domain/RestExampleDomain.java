@@ -16,8 +16,7 @@ import nablarch.core.validation.ee.SystemChar;
  */
 public class RestExampleDomain {
     /** ID */
-    @NumberRange(min = 0)
-    @Digits(integer = 9)
+    @NumberRange(min = 0, max = 999999999)
     private String id;
 
     /** テーマタイトル */
