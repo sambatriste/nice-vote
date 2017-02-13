@@ -31,7 +31,7 @@
     <dba.entity.entityPackage>entity</dba.entity.entityPackage>
 
     <dba.erdFile>src/main/resources/entity/nicevote.edm</dba.erdFile>
-    <dba.gsp-target-dir>${project.build.directory}</dba.gsp-target-dir>
+    <dba.gsp-target-dir>${project.build.directory}/gsp/</dba.gsp-target-dir>
   </properties>
 
   <!--
