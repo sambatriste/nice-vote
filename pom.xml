@@ -107,6 +107,21 @@
                   <goal>export-schema</goal>
                 </goals>
               </execution>
+              <!-- 自動テストスキーマ用作業 -->
+              <!--  DDLを実行する  -->
+              <execution>
+                <id>execute-ddl-for-ut</id>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <driver>${nablarch.db.jdbcDriver}</driver>
+                  <url>jdbc:h2:./h2/db/nicevote_ut</url>
+                  <user>REST_EXAMPLE_UT</user>
+                  <password>REST_EXAMPLE_UT</password>
+                </configuration>
+                <goals>
+                  <goal>execute-ddl</goal>
+                </goals>
+              </execution>
             </executions>
           </plugin>
           <plugin>
