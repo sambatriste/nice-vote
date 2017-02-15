@@ -1,11 +1,10 @@
-package com.nablarch.example.testing.http;
+package nablarch.fw.web;
 
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import nablarch.core.util.StringUtil;
 import nablarch.core.util.annotation.Published;
-import nablarch.fw.web.HttpCookie;
 
 /**
  * {@link HttpCookie}のテストFW用モック実装クラス。

@@ -1,4 +1,4 @@
-package com.nablarch.example.testing.http;
+package nablarch.fw.web;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -17,9 +17,6 @@ import java.util.regex.Pattern;
 
 import nablarch.core.util.Builder;
 import nablarch.core.util.annotation.Published;
-import nablarch.fw.web.HttpCookie;
-import nablarch.fw.web.HttpErrorResponse;
-import nablarch.fw.web.HttpRequest;
 
 /**
  * testing framework用の{@link HttpRequest}実装クラス。

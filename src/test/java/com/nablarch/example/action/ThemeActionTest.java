@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import com.nablarch.example.DatabaseTestSupport;
 import com.nablarch.example.entity.Theme;
-import com.nablarch.example.testing.http.MockHttpRequest;
 
 import nablarch.common.dao.UniversalDao;
+import nablarch.fw.web.MockHttpRequest;
 
 /**
  * Created by tie301686 on 2017/02/15.
