@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.Test;
@@ -19,30 +20,28 @@ import nablarch.fw.web.MockHttpRequest;
  */
 public class ThemeActionTest extends DatabaseTestSupport {
 
+    private ThemeAction sut = new ThemeAction();
+
     @Test
     public void testFind() {
-        {
-            List<Theme> themes = new ArrayList<>();
-            {
-                Theme theme = new Theme();
-                theme.setTitle("aaa");
-                themes.add(theme);
-            }
-            {
-                Theme theme = new Theme();
-                theme.setTitle("bbb");
-                themes.add(theme);
-            }
-            UniversalDao.batchInsert(themes);
-        }
 
-        ThemeAction sut = new ThemeAction();
-        MockHttpRequest request = new MockHttpRequest();
-        List<Theme> themes = sut.findAll(request);
-        assertThat(themes.size(), is(2));
+        List<Theme> themes = new ArrayList<>();
         {
-            Theme theme = themes.get(0);
-            assertThat(theme.getTitle(), is("aaa"));
+            Theme theme = new Theme();
+            theme.setTitle("aaa");
+            themes.add(theme);
         }
+        {
+            Theme theme = new Theme();
+            theme.setTitle("bbb");
+            themes.add(theme);
+        }
+        UniversalDao.batchInsert(themes);
+
+        List<Theme> actual = sut.findAll(new MockHttpRequest());
+
+        actual.sort(Comparator.comparing(Theme::getTitle));
+        assertThat(themes.get(0).getTitle(), is("aaa"));
+        assertThat(themes.get(1).getTitle(), is("bbb"));
     }
 }
