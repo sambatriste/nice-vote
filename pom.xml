@@ -294,6 +294,12 @@
       <version>3.1.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jmockit</groupId>
+      <artifactId>jmockit</artifactId>
+      <version>1.30</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
