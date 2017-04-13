@@ -107,6 +107,21 @@
                   <goal>export-schema</goal>
                 </goals>
               </execution>
+              <!-- 自動テストスキーマ用作業 -->
+              <!--  DDLを実行する  -->
+              <execution>
+                <id>execute-ddl-for-ut</id>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <driver>${nablarch.db.jdbcDriver}</driver>
+                  <url>jdbc:h2:./h2/db/nicevote_ut</url>
+                  <user>REST_EXAMPLE_UT</user>
+                  <password>REST_EXAMPLE_UT</password>
+                </configuration>
+                <goals>
+                  <goal>execute-ddl</goal>
+                </goals>
+              </execution>
             </executions>
           </plugin>
           <plugin>
@@ -278,6 +293,12 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jmockit</groupId>
+      <artifactId>jmockit</artifactId>
+      <version>1.30</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
