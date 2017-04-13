@@ -25,9 +25,9 @@ class Themes extends React.Component {
     fetch('/api/theme')
     .then((data) => data.json())
     .then((json) => {
-       this.setState({
-         themes: json
-       });
+      this.setState({
+        themes: json
+      });
     });
   }
 
