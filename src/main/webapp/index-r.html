@@ -13,29 +13,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
 <script type="text/babel">
 
-const Vote = React.createClass({
-  name: 'Vote',
-  getInitialState : function() {
-     return {
+class Vote extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state= {
        items: this.props.items,
        newOpinion: "",
-     };
-  },
-  vote: function(item) {
-     item.num += 1;
-     this.setState({
-       items: this.state.items
-     });
-  },
+    };
+  }
+
+  vote(item) {
+    item.num += 1;
+    this.setState({
+      items: this.state.items
+    });
+  }
 
 
-  sumVotes: function(itemsToCount) {
+  sumVotes(itemsToCount) {
     return Object.keys(itemsToCount).reduce(function(previous, key) {
       return previous + itemsToCount[key].num;
     }, 0);
-  },
+  }
 
-  add: function(e) {
+  add(e) {
+    console.log(this);
     e.preventDefault();
     if (!this.state.newOpinion) {
       return;
@@ -48,15 +51,15 @@ const Vote = React.createClass({
       items: this.state.items,
       newOpinion: ''
     });
-  },
+  }
 
   editNewOpinion(e) {
     this.setState({
       newOpinion: e.target.value
     });
-  },
+  }
 
-  render: function() {
+  render() {
     return (
     <div>
       <h3>お題: {this.props.title}</h3>
@@ -73,9 +76,9 @@ const Vote = React.createClass({
           )
         }, this)
       }</ul>
-      <form onSubmit={this.add}>
+      <form onSubmit={this.add.bind(this)}>
         <input type="text"
-               onChange={this.editNewOpinion}
+               onChange={this.editNewOpinion.bind(this)}
                value={this.state.newOpinion}
                placeholder='意見'
         />
@@ -85,7 +88,7 @@ const Vote = React.createClass({
     </div>
     );
   }
-});
+}
 
 
 ReactDOM.render(
