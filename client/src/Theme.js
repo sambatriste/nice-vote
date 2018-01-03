@@ -1,5 +1,5 @@
 import React from 'react';
-
+import axios from 'axios';
 
 class Theme extends React.Component {
 
@@ -19,19 +19,22 @@ class Theme extends React.Component {
 
   componentDidMount() {
     const themeApi = `/api/theme/${this.state.themeId}`;
-    fetch(themeApi)
-      .then(data => data.json())
-      .then(json => {
+    axios.get(themeApi)
+      .then(res => {
         this.setState({
-          title: json.title,
-          items: json.agreements
+          title: res.data.title,
+          items: res.data.agreements
         });
       });
   }
 
   vote(item) {
-    item.agreementCount += 1;
-    this.setState(this.state);
+
+    axios.post('/api/agreement', {
+      opinionId: item.opinionId
+    }).then(res => {
+      this.componentDidMount();
+    })
   }
 
 
