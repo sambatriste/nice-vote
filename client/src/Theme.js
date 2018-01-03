@@ -12,7 +12,7 @@ class Theme extends React.Component {
       title: '',
       newOpinion: '',
     };
-
+    this.vote = this.vote.bind(this);
     this.add = this.add.bind(this);
     this.editNewOpinion = this.editNewOpinion.bind(this);
   }
@@ -85,14 +85,7 @@ class Theme extends React.Component {
         <p>現在{items.length}つの候補があります。</p>
         <ul>{
           items.map((item, idx) => {
-            return (
-              <li key={idx}>
-                {item.description}
-                <button key={idx} onClick={event => this.vote(item)}>
-                  {item.agreementCount}
-                </button>
-              </li>
-            )
+            return (<Opinion idx={idx} item={item} handleClick={this.vote}/>)
           }, this)
         }</ul>
       </div>
@@ -111,6 +104,34 @@ class Theme extends React.Component {
           <button disabled={!newOpinion}>追加</button>
         </form>
       </div>
+    );
+  }
+}
+
+class Opinion extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      idx: props.idx,
+      item: props.item
+    };
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick() {
+    this.props.handleClick(this.state.item)
+  }
+
+  render() {
+    const item = this.state.item;
+    const idx = this.state.idx;
+    return (
+      <li key={idx}>
+        {item.description}
+        <button key={idx} onClick={this.onClick}>
+          {item.agreementCount}
+        </button>
+      </li>
     );
   }
 }
