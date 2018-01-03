@@ -21,10 +21,10 @@ class Theme extends React.Component {
     const themeApi = `/api/theme/${this.state.themeId}`;
     fetch(themeApi)
       .then(data => data.json())
-      .then(items => {
+      .then(json => {
         this.setState({
-          title: items[0].title,
-          items: items
+          title: json.title,
+          items: json.agreements
         });
       });
   }
@@ -61,8 +61,10 @@ class Theme extends React.Component {
     });
   }
 
-  editNewOpinion(e) {
-    this.setState({newOpinion: e.target.value});
+  editNewOpinion(event) {
+    this.setState({
+      newOpinion: event.target.value
+    });
   }
 
   render() {
