@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class NewTheme extends React.Component {
 
@@ -13,20 +14,12 @@ class NewTheme extends React.Component {
 
 
   postNewTheme() {
-    const method = 'POST';
-    const headers = {
-      'Content-type': 'application/json'
-    };
-    const body = JSON.stringify({
+    axios.post('/api/theme', {
       title: this.state.title
-    });
-
-
-    fetch('/api/theme', {method, headers, body})
-      .then(response => response.json())
-      .then(console.log)
-      .catch(console.error);
-
+    }).then(res => {
+        this.props.history.push('/themes');
+      }
+    ).catch(res => console.log(res));
   }
 
   editTheme(event) {
@@ -34,6 +27,7 @@ class NewTheme extends React.Component {
       title: event.target.value
     });
   }
+
 
   render() {
     const title = this.state.title;

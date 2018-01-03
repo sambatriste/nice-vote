@@ -15,6 +15,8 @@ class Theme extends React.Component {
     this.vote = this.vote.bind(this);
     this.add = this.add.bind(this);
     this.editNewOpinion = this.editNewOpinion.bind(this);
+    this.reloadThemes = this.reloadThemes.bind(this);
+    this.aaa = this.aaa.bind(this);
   }
 
   componentDidMount() {
@@ -32,9 +34,21 @@ class Theme extends React.Component {
 
     axios.post('/api/agreement', {
       opinionId: item.opinionId
-    }).then(res => {
-      this.componentDidMount();
-    })
+    }).then(this.reloadThemes)
+
+  }
+
+  reloadThemes() {
+    const themeApi = `/api/theme/${this.state.themeId}`;
+    axios.get(themeApi)
+      .then(this.aaa);
+  }
+
+  aaa(res) {
+    this.setState({
+      title: res.data.title,
+      items: res.data.agreements
+    });
   }
 
 
@@ -114,20 +128,16 @@ class Theme extends React.Component {
 class Opinion extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      idx: props.idx,
-      item: props.item
-    };
     this.onClick = this.onClick.bind(this);
   }
 
   onClick() {
-    this.props.handleClick(this.state.item)
+    this.props.handleClick(this.props.item)
   }
 
   render() {
-    const item = this.state.item;
-    const idx = this.state.idx;
+    const item = this.props.item;
+    const idx = this.props.idx;
     return (
       <li key={idx}>
         {item.description}
