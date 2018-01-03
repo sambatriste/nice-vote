@@ -12,14 +12,12 @@ class NewTheme extends React.Component {
     this.postNewTheme = this.postNewTheme.bind(this);
   }
 
-
   postNewTheme() {
     axios.post('/api/theme', {
       title: this.state.title
     }).then(res => {
-        this.props.history.push('/themes');
-      }
-    ).catch(res => console.log(res));
+      this.props.history.push('/themes');
+    });
   }
 
   editTheme(event) {
@@ -28,20 +26,17 @@ class NewTheme extends React.Component {
     });
   }
 
-
   render() {
     const title = this.state.title;
     return (
       <div>
-        <form onSubmit={this.postNewTheme}>
-          <h2>新規テーマ登録</h2>
-          <input type="text"
-                 onChange={this.editTheme}
-                 value={title}
-                 placeholder='新しいテーマ'
-          />
-          <button disabled={!title}>追加</button>
-        </form>
+        <h2>新規テーマ登録</h2>
+        <input type="text"
+               onChange={this.editTheme}
+               value={title}
+               placeholder='新しいテーマ'
+        />
+        <button disabled={!title} onClick={this.postNewTheme}>追加</button>
       </div>
     );
   }

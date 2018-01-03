@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 class Themes extends React.Component {
 
@@ -11,11 +12,10 @@ class Themes extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/theme')
-      .then(data => data.json())
-      .then(json => {
+    axios.get('/api/theme')
+      .then(res => {
         this.setState({
-          themes: json
+          themes: res.data
         });
       });
   }

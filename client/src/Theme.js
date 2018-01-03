@@ -15,40 +15,27 @@ class Theme extends React.Component {
     this.vote = this.vote.bind(this);
     this.add = this.add.bind(this);
     this.editNewOpinion = this.editNewOpinion.bind(this);
-    this.reloadThemes = this.reloadThemes.bind(this);
-    this.aaa = this.aaa.bind(this);
+    this.fetchThemes = this.fetchThemes.bind(this);
   }
 
   componentDidMount() {
-    const themeApi = `/api/theme/${this.state.themeId}`;
-    axios.get(themeApi)
+    this.fetchThemes();
+  }
+
+  vote(item) {
+    axios.post('/api/agreement', {
+      opinionId: item.opinionId
+    }).then(this.fetchThemes);
+  }
+
+  fetchThemes() {
+    axios.get(`/api/theme/${this.state.themeId}`)
       .then(res => {
         this.setState({
           title: res.data.title,
           items: res.data.agreements
         });
       });
-  }
-
-  vote(item) {
-
-    axios.post('/api/agreement', {
-      opinionId: item.opinionId
-    }).then(this.reloadThemes)
-
-  }
-
-  reloadThemes() {
-    const themeApi = `/api/theme/${this.state.themeId}`;
-    axios.get(themeApi)
-      .then(this.aaa);
-  }
-
-  aaa(res) {
-    this.setState({
-      title: res.data.title,
-      items: res.data.agreements
-    });
   }
 
 
