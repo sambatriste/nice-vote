@@ -22,13 +22,11 @@ class Theme extends React.Component {
     fetch(themeApi)
       .then(data => data.json())
       .then(items => {
-        this.setState(
-          {
-            title: items[0].title,
-            items: items
-          });
+        this.setState({
+          title: items[0].title,
+          items: items
+        });
       });
-
   }
 
   vote(item) {
@@ -51,21 +49,16 @@ class Theme extends React.Component {
       return;
     }
     const items = this.state.items;
-    items.push(
-      {
-        themeId: this.state.themeId,
-        title: this.state.title,
-        description: this.state.newOpinion,
-        agreementCount: 0
-      }
-    );
-    this.setState(
-      {
-        items: items,
-        newOpinion: ''
-      }
-    );
-
+    items.push({
+      themeId: this.state.themeId,
+      title: this.state.title,
+      description: this.state.newOpinion,
+      agreementCount: 0
+    });
+    this.setState({
+      items: items,
+      newOpinion: ''
+    });
   }
 
   editNewOpinion(e) {
@@ -73,12 +66,23 @@ class Theme extends React.Component {
   }
 
   render() {
+    const sum = this.sumAgreements(this.state.items);
     return (
       <div>
-        <h3>お題: {this.state.title}</h3>
-        <p>現在{this.state.items.length}つの候補があります。</p>
+        {this.renderItems(this.state.title, this.state.items)}
+        {this.renderForm(this.state.newOpinion)}
+        <p>現在の総投票数は{sum}票です。</p>
+      </div>
+    );
+  }
+
+  renderItems(title, items) {
+    return (
+      <div>
+        <h3>お題: {title}</h3>
+        <p>現在{items.length}つの候補があります。</p>
         <ul>{
-          this.state.items.map((item, idx) => {
+          items.map((item, idx) => {
             return (
               <li key={idx}>
                 {item.description}
@@ -89,15 +93,21 @@ class Theme extends React.Component {
             )
           }, this)
         }</ul>
+      </div>
+    );
+  }
+
+  renderForm(newOpinion) {
+    return (
+      <div>
         <form onSubmit={this.add}>
           <input type="text"
                  onChange={this.editNewOpinion}
-                 value={this.state.newOpinion}
+                 value={newOpinion}
                  placeholder='意見'
           />
-          <button disabled={!this.state.newOpinion}>追加</button>
+          <button disabled={!newOpinion}>追加</button>
         </form>
-        <p>現在の総投票数は{this.sumAgreements(this.state.items)}票です。</p>
       </div>
     );
   }
