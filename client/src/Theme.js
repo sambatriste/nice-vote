@@ -54,13 +54,12 @@ class Theme extends React.Component {
       return;
     }
 
-    const newItem = {
+    const newItems = [...this.state.items, {
       themeId: this.state.themeId,
       title: this.state.title,
       description: this.state.newOpinion,
       agreementCount: 0
-    };
-    const newItems = this.state.items.concat(newItem);
+    }];
     this.setState({
       items: newItems,
       newOpinion: ''
@@ -130,7 +129,10 @@ class Opinion extends React.Component {
   render() {
     const { description, agreementCount } = this.props.item;
     return (
-      <li>{description}<button onClick={this.onClick}>{agreementCount}</button></li>
+      <li>
+        {description}
+        <button onClick={this.onClick}>{agreementCount}</button>
+      </li>
     );
   }
 }
