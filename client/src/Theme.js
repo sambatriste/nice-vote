@@ -29,19 +29,21 @@ class Theme extends React.Component {
   }
 
   fetchThemes() {
-    axios.get(`/api/theme/${this.state.themeId}`)
-      .then(res => {
-        this.setState({
-          title: res.data.title,
-          items: res.data.agreements
-        });
+    const updateState = res => {
+      this.setState({
+        title: res.data.title,
+        items: res.data.agreements
       });
+    };
+    axios.get(`/api/theme/${this.state.themeId}`)
+         .then(updateState);
   }
 
 
-  sumAgreements(itemsToCount) {
-    return Object.keys(itemsToCount).reduce((previous, key) => {
-      return previous + itemsToCount[key].agreementCount;
+  sumAgreements(items) {
+    return Object.keys(items).reduce((previous, key) => {
+      const item = items[key];
+      return previous + item.agreementCount;
     }, 0);
   }
 
@@ -52,15 +54,16 @@ class Theme extends React.Component {
     if (!this.state.newOpinion) {
       return;
     }
-    const items = this.state.items;
-    items.push({
+
+    const newItem = {
       themeId: this.state.themeId,
       title: this.state.title,
       description: this.state.newOpinion,
       agreementCount: 0
-    });
+    };
+    const newItems = this.state.items.concat(newItem);
     this.setState({
-      items: items,
+      items: newItems,
       newOpinion: ''
     });
   }
@@ -123,8 +126,7 @@ class Opinion extends React.Component {
   }
 
   render() {
-    const item = this.props.item;
-    const idx = this.props.idx;
+    const { item, idx } = this.props;
     return (
       <li key={idx}>
         {item.description}

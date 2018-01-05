@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 class Themes extends React.Component {
@@ -12,12 +12,11 @@ class Themes extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/theme')
-      .then(res => {
-        this.setState({
-          themes: res.data
-        });
+    axios.get('/api/theme').then(res => {
+      this.setState({
+        themes: res.data
       });
+    });
   }
 
   render() {
@@ -25,9 +24,9 @@ class Themes extends React.Component {
       <div>
         <h2>テーマ一覧</h2>
         <ul>{
-          this.state.themes.map((theme, idx) => {
+          this.state.themes.map(theme => {
             return (
-              <li key={idx}>
+              <li key={theme.themeId}>
                 <Link to={`/themes/${theme.themeId}`}>{theme.title}</Link>
               </li>
             );
