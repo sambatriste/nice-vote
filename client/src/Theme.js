@@ -15,20 +15,19 @@ class Theme extends React.Component {
     this.vote = this.vote.bind(this);
     this.add = this.add.bind(this);
     this.editNewOpinion = this.editNewOpinion.bind(this);
-    this.fetchThemes = this.fetchThemes.bind(this);
+    this.fetchTheme = this.fetchTheme.bind(this);
   }
 
   componentDidMount() {
-    this.fetchThemes();
+    this.fetchTheme();
   }
 
-  vote(item) {
-    axios.post('/api/agreement', {
-      opinionId: item.opinionId
-    }).then(this.fetchThemes);
+  vote(opinionId) {
+    axios.post('/api/agreement', { opinionId })
+         .then(this.fetchTheme);
   }
 
-  fetchThemes() {
+  fetchTheme() {
     const updateState = res => {
       this.setState({
         title: res.data.title,
@@ -47,9 +46,9 @@ class Theme extends React.Component {
     }, 0);
   }
 
-  add(e) {
+  add(event) {
 
-    e.preventDefault();
+    event.preventDefault();
 
     if (!this.state.newOpinion) {
       return;
@@ -91,8 +90,10 @@ class Theme extends React.Component {
         <h3>お題: {title}</h3>
         <p>現在{items.length}つの候補があります。</p>
         <ul>{
-          items.map((item, idx) => {
-            return (<Opinion idx={idx} item={item} handleClick={this.vote}/>)
+          items.map(item => {
+            return <Opinion key={item.opinionId}
+                            item={item}
+                            handleClick={this.vote} />
           }, this)
         }</ul>
       </div>
@@ -122,18 +123,14 @@ class Opinion extends React.Component {
   }
 
   onClick() {
-    this.props.handleClick(this.props.item)
+    const { handleClick, item } = this.props;
+    handleClick(item.opinionId);
   }
 
   render() {
-    const { item, idx } = this.props;
+    const { description, agreementCount } = this.props.item;
     return (
-      <li key={idx}>
-        {item.description}
-        <button key={idx} onClick={this.onClick}>
-          {item.agreementCount}
-        </button>
-      </li>
+      <li>{description}<button onClick={this.onClick}>{agreementCount}</button></li>
     );
   }
 }
