@@ -5,10 +5,10 @@ import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
 import nablarch.core.validation.ee.Domain;
 import nablarch.core.validation.ee.Required;
-import nablarch.fw.web.HttpResponse;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 
@@ -24,11 +24,12 @@ public class OpinionAction {
      * @return レスポンス
      */
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Valid
-    public HttpResponse save(OpinionRegisterForm form) {
+    public Opinion save(OpinionRegisterForm form) {
         Opinion opinion = BeanUtil.createAndCopy(Opinion.class, form);
         UniversalDao.insert(opinion);
-        return new HttpResponse(201);
+        return opinion;
     }
 
 

@@ -1,22 +1,21 @@
 package com.nablarch.example.action;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import com.nablarch.example.dto.OpinionAndAgreements;
+import com.nablarch.example.dto.Agreements;
+import com.nablarch.example.dto.Opinions;
 import com.nablarch.example.entity.Theme;
-
 import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
 import nablarch.core.validation.ee.Domain;
 import nablarch.core.validation.ee.Required;
 import nablarch.fw.web.HttpRequest;
 import nablarch.fw.web.HttpResponse;
+
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by kawasaki on 2017/01/15.
@@ -41,10 +40,22 @@ public class ThemeAction {
      */
     @Produces(MediaType.APPLICATION_JSON)
     @Valid
-    public List<OpinionAndAgreements> find(ThemeSearchForm form) {
-        return UniversalDao.findAllBySqlFile(OpinionAndAgreements.class,
-                                             "FIND_OPINIONS",
-                                             form);
+    public Opinions find(ThemeSearchForm form) {
+
+        List<Agreements> agreements
+                = UniversalDao.findAllBySqlFile(Agreements.class,
+                                                "FIND_OPINIONS",
+                                                form);
+        Theme theme;
+        if (agreements.isEmpty()) {
+            theme = UniversalDao.findById(Theme.class, form.getThemeId());
+        } else {
+            Agreements first = agreements.get(0);
+            theme = new Theme();
+            theme.setThemeId(first.getThemeId());
+            theme.setTitle(first.getTitle());
+        }
+        return new Opinions(theme, agreements);
     }
 
     /**

@@ -1,30 +1,10 @@
 package com.nablarch.example.dto;
 
-/**
- * Created by kawasaki on 2017/01/15.
- */
-public class OpinionAndAgreements {
-    private Integer themeId;
-    private String title;
+public class OpinionAgreements {
+
     private Integer opinionId;
     private String description;
     private Integer agreementCount;
-
-    public Integer getThemeId() {
-        return themeId;
-    }
-
-    public void setThemeId(Integer themeId) {
-        this.themeId = themeId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public Integer getOpinionId() {
         return opinionId;
