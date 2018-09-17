@@ -8,7 +8,6 @@ import nablarch.core.beans.BeanUtil;
 import nablarch.core.validation.ee.Domain;
 import nablarch.core.validation.ee.Required;
 import nablarch.fw.web.HttpRequest;
-import nablarch.fw.web.HttpResponse;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -65,11 +64,12 @@ public class ThemeAction {
      * @return レスポンス(OK)
      */
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     @Valid
-    public HttpResponse save(ThemeRegisterForm form) {
+    public Theme save(ThemeRegisterForm form) {
         Theme theme = BeanUtil.createAndCopy(Theme.class, form);
         UniversalDao.insert(theme);
-        return new HttpResponse(201);
+        return theme;
     }
 
     public static class ThemeRegisterForm implements Serializable {
